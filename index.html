@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday, Alex 🤍</title>
 
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🎂</text></svg>'>
+
   <style>
     :root,
     html[data-theme="light"] {
@@ -813,36 +815,34 @@
       margin-bottom: 10px;
     }
 
-    @media (max-width: 900px) {
-      .hero-grid,
-      .discord-grid,
-      .music-grid,
-      .final-grid,
-      .memory-grid,
-      .reasons-grid,
-      .countup-grid {
-        grid-template-columns: 1fr;
+    @media (max-width: 640px) {
+      .container {
+        width: min(100%, calc(100% - 24px));
       }
 
-      .timeline-item {
-        grid-template-columns: 1fr;
-        gap: 12px;
+      .section-card {
+        padding: 18px;
+        border-radius: 22px;
       }
 
-      .timeline-date {
-        width: fit-content;
-      }
-
-      .hero {
-        min-height: auto;
-        padding-top: 16px;
-      }
-
-      .hero-art { min-height: auto; }
-
-      .jump-nav {
+      .section-head {
         flex-direction: column;
         align-items: flex-start;
+        gap: 8px;
+      }
+
+      .section-head p {
+        max-width: 100%;
+      }
+
+      .gallery-helper {
+        text-align: left;
+        font-size: 0.95rem;
+        margin-bottom: 14px;
+      }
+
+      .jump-nav {
+        border-radius: 18px;
       }
     }
   </style>
