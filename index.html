@@ -100,14 +100,15 @@
     }
 
     .top-nav-shell {
-      position: sticky;
-      top: 14px;
+      position: relative;
       z-index: 30;
-      padding: 0;
-      margin-bottom: 10px;
+      margin-bottom: 18px;
     }
 
     .jump-nav {
+      position: sticky;
+      top: 24px;
+      z-index: 30;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -1093,7 +1094,7 @@
   <main class="container">
     <div class="top-nav-shell">
       <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-expanded="false" aria-controls="jumpNav">
-        ✨ menu
+        ✨ menu ✨
       </button>
       <div class="jump-nav" id="jumpNav">
         <div class="jump-links">
