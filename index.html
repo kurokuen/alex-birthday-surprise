@@ -101,9 +101,10 @@
 
     .top-nav-shell {
       position: sticky;
-      top: 0;
-      z-index: 5;
-      padding: 10px 0 6px;
+      top: 14px;
+      z-index: 30;
+      padding: 0;
+      margin-bottom: 10px;
     }
 
     .jump-nav {
@@ -112,12 +113,12 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      background: var(--surface);
-      border-radius: 999px;
+      background: color-mix(in srgb, var(--surface) 92%, transparent 8%);
+      border-radius: 24px;
       border: 1px solid var(--line);
-      padding: 8px 14px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 24px rgba(15, 23, 36, 0.16);
+      padding: 12px 14px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 14px 32px rgba(15, 23, 36, 0.18);
     }
 
     .jump-links {
@@ -814,6 +815,56 @@
       margin-bottom: 10px;
     }
 
+    .mobile-nav-toggle {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .section-card {
+        padding: 22px;
+      }
+
+      .section-head {
+        grid-template-columns: 1fr !important;
+        gap: 14px;
+      }
+
+      .section-head h2 {
+        max-width: 100%;
+        font-size: clamp(2rem, 7vw, 3rem);
+        line-height: 1.05;
+      }
+
+      .section-head p {
+        max-width: 100%;
+        justify-self: start;
+      }
+
+      .gallery-grid-20,
+      .music-grid,
+      .time-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+
+      .discord-shot-wrap,
+      .discord-widget-wrap {
+        max-width: 100%;
+      }
+
+      .discord-widget-wrap {
+        margin-top: 24px;
+      }
+
+      .discord-widget-wrap iframe {
+        height: 380px;
+      }
+
+      .spotify-card,
+      .music-card {
+        min-height: auto;
+      }
+    }
+
     @media (max-width: 640px) {
       .container {
         width: min(100%, calc(100% - 24px));
@@ -847,49 +898,6 @@
     
       html, body {
       overflow-x: hidden;
-    }
-
-    @media (max-width: 900px) {
-      .section-card {
-        padding: 22px;
-      }
-
-      .section-head {
-        grid-template-columns: 1fr !important;
-        gap: 14px;
-      }
-
-      .section-head h2 {
-        max-width: 100%;
-        font-size: clamp(2rem, 7vw, 3rem);
-        line-height: 1.05;
-      }
-
-      .section-head p {
-        max-width: 100%;
-        justify-self: start;
-      }
-
-      .gallery-grid-20,
-      .music-grid,
-      .time-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      }
-
-      .discord-shot-wrap,
-      .discord-widget-wrap {
-        max-width: 100%;
-        margin-top: 24px;
-      }
-
-      .discord-widget-wrap iframe {
-        height: 380px;
-      }
-
-      .spotify-card,
-      .music-card {
-        min-height: auto;
-      }
     }
 
     @media (max-width: 640px) {
@@ -928,8 +936,7 @@
       }
 
       .reasons-grid,
-      .memory-grid,
-      .story-timeline {
+      .memory-grid {
         grid-template-columns: 1fr !important;
       }
 
@@ -1017,6 +1024,58 @@
         line-height: 1.7;
       }
     }
+
+    @media (max-width: 640px) {
+      .top-nav-shell {
+        top: 10px;
+        margin-bottom: 12px;
+      }
+
+      .mobile-nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        min-height: 46px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--surface-solid);
+        color: var(--text);
+        font-family: inherit;
+        font-weight: 700;
+        font-size: 0.98rem;
+        box-shadow: 0 10px 24px rgba(15, 23, 36, 0.16);
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+
+      .jump-nav {
+        display: none;
+        border-radius: 22px;
+        padding: 14px;
+      }
+
+      .jump-nav.open {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .jump-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        width: 100%;
+      }
+
+      .jump-link,
+      .theme-toggle-small {
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+      }
+    }
   </style>
 </head>
 <body id="top">
@@ -1033,7 +1092,10 @@
 
   <main class="container">
     <div class="top-nav-shell">
-      <div class="jump-nav">
+      <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-expanded="false" aria-controls="jumpNav">
+        ✨ menu
+      </button>
+      <div class="jump-nav" id="jumpNav">
         <div class="jump-links">
           <button class="jump-link" data-jump="#countup"><span>⏱️</span>timeline</button>
           <button class="jump-link" data-jump="#memories-1"><span>📖</span>chapters</button>
@@ -1622,6 +1684,17 @@ i hope this year loves you as gently as you deserve.</div>
     }
 
     setupZoomableImages();
+
+  const mobileNavToggle = document.getElementById('mobileNavToggle');
+  const jumpNav = document.getElementById('jumpNav');
+
+  if (mobileNavToggle && jumpNav) {
+    mobileNavToggle.addEventListener('click', () => {
+      jumpNav.classList.toggle('open');
+      const isOpen = jumpNav.classList.contains('open');
+      mobileNavToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
   </script>
 </body>
 </html>
