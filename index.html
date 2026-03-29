@@ -100,11 +100,12 @@
     }
 
     .top-nav-shell {
-      position: sticky;
+      position: fixed;
       top: 20px;
-      z-index: 999;
-      padding: 0;
-      margin-bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(1100px, calc(100vw - 32px));
     }
 
     .jump-nav {
@@ -152,6 +153,10 @@
       align-items: center;
       gap: 6px;
       cursor: pointer;
+    }
+
+    [data-theme="dark"] .theme-toggle-small {
+      color: #f5f7ff;
     }
 
     .hero {
